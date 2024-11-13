@@ -2,7 +2,7 @@
 $maquina = "localhost";
 $usuario = "root";
 $senha = "";
-$nome_do_banco = "bd_prefeitura_sp";
+$nome_do_banco = "base_provedor_internet";
 $porta = 3306;
 
 try {

@@ -15,5 +15,18 @@
     <div id="conteudo">
         Escolha uma opção acima
     </div>
+
+    <script>
+        $("#btnOSAbertas").click(function(){
+            $("#conteudo").html("Carregando...");
+            $("#conteudo").load("consultar_os_aberto.php");
+
+        });
+        $("#btnOSFechadas").click(function(){
+            $("#conteudo").html("Carregando...");
+            $("#conteudo").load("consultar_os_fechadas.php");
+
+        });
+    </script>
 </body>
 </html>
