@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <title>Document</title>
 </head>
+
 <body>
     <button id="btnNova" class="botoes">Nova OS</button>
     <button id="btnOSAbertas" class="botoes">OS Abertas</button>
@@ -16,11 +18,81 @@
         Escolha uma opção acima
     </div>
 
+ 
+
     <script>
         $(document).ready(function () {
             $("#formularioEditar").hide();
+            $("#conteudo2").hide();
+            $("#bntsalvarAlteracao").click(function () {
+            $("#conteudo").html("<img src='loading.gif' height: '40';>"); 
+            $("#formularioEditar").hide();      
+            var id_escolhido = $("#caixa_id").val();
+            var desc_escolhido = $("#caixa_desc").val();
+            var cat_escolhido = $("#caixa_categoria").val();
+            var func_escolhido = $("#caixa_fucionario").val();
+            var preco_escolhido = $("#caixa_preco").val();
+            var pagamento_escolhido = $("#caixa_pagamento").val();
+            var status_escolhido = $("#caixa_status_os").val();
+            var data_escolhido = $("#caixa_data").val();
+
+            $.ajax({
+                type: "POST",
+                url: "atualizar.php",
+                data: {
+                    id_os: id_escolhido,
+                    desc_nova: desc_escolhido,
+                    cat_nova: cat_escolhido,
+                    func_novo: func_escolhido,
+                    preco_novo: preco_escolhido,
+                    data_abertura:data_escolhido,
+                    pagamento_novo: pagamento_escolhido,
+                    status_novo: status_escolhido
+                },
+                success: function (resposta) {
+                    alert(resposta);
+                    $("#conteudo").html("Carregando...");
+                    $("#conteudo").load("consultar_os_aberto.php");
+                    $("#formularioEditar").hide();               
+
+                },
+                error: function () {
+                    alert("Erro ao atualizar");
+
+                }
+            });
         });
+
+
+        $("#bntDeletar").click(function () {
+            var id_capturado = $("#caixa_id").val();
+
+            if(confirm("Tem certeza que deseja!!")){
+                $("#conteudo").html("<img src='loading.gif' height: '40';>");                   
+            $.ajax({
+                url: "deletar.php",
+                type: "POST",
+                data: { id_os: id_capturado },
+                success: function (resposta) {
+                    alert(resposta);
+                    $("#conteudo").load("consultar_os_aberto.php");
+                    $("#formularioEditar").hide();
+                },
+                error: function () {
+                    alert("Erro ao deletar");
+
+                }
+            });   
+            }
+
+        });
+
         
+
+
+
+        });
+
         $(document).on("click", ".cartoes", function () {
             $("#formularioEditar").show();
 
@@ -50,25 +122,30 @@
 
 
 
-        $("#bntFecharEditar").click(function(){
-            $("#formularioEditar").hide();
+            $("#bntFecharEditar").click(function () {
+                $("#formularioEditar").hide();
+            });
+
+
+     
+
+
         });
 
-            
-        });
 
 
-
-        $("#btnOSAbertas").click(function(){
+        $("#btnOSAbertas").click(function () {
             $("#conteudo").html("Carregando...");
             $("#conteudo").load("consultar_os_aberto.php");
 
         });
-        $("#btnOSFechadas").click(function(){
+        $("#btnOSFechadas").click(function () {
             $("#conteudo").html("Carregando...");
             $("#conteudo").load("consultar_os_fechadas.php");
 
         });
+
+
 
     </script>
     <div class="tela_escura" id="formularioEditar">
@@ -81,7 +158,7 @@
             Data/Hora de Abertura: <br>
             <input type="datetime-local" id="caixa_data" disabled><br>
             Descrição: <br>
-            <textarea  id="caixa_desc" ></textarea> <br>
+            <textarea id="caixa_desc"></textarea> <br>
 
             Preço (R$): <br>
             <input type="number" step="0.01" id="caixa_preco"><br>
@@ -120,4 +197,5 @@
         </div>
     </div>
 </body>
+
 </html>

@@ -30,7 +30,7 @@ try{
     <b>Categoria:</b>  <span class='categoria'>$categoria</span><br>
     <b>Preço: R$ </b> <span class='preco'>$preco</span><br>
     <b>Pagamento:</b>  <span class='pagamento'>$pagamento</span><br>
-    <b>Status:</b> <span class='status_os'>$status_os</span><br>
+    <b>Status:</b> <span class='status_os' style='color: rgb(51, 255, 0);'>$status_os</span><br>
         <button id='bntfechaOs' id_os='$id_os'>Fecha OS</button>
     </div>
         ";
