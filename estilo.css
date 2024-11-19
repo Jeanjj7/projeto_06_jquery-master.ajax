@@ -87,7 +87,6 @@
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(10px);
-
 }
 .formulario{
     width: 300px;
@@ -97,6 +96,15 @@
     box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
     font-size: 20px;
 }
+
+/* #bntCadratraT{
+    padding: 20px;
+    background-color: cornflowerblue;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+
+} */
 .botoes1{
     padding: 10px;
     border-radius: 10px;
@@ -110,14 +118,40 @@
 }
 #bntsalvarAlteracao{
     background-color: rgb(51, 255, 0);
+    cursor: crosshair;
 }
 #bntDeletar{
     background-color: red;
+    cursor: not-allowed;
 }
 input, select, textarea{
     font-size: 20px;
 }
-#conteudo2{
-    margin: auto;
+
+#btnReabrir{
+    background-color: green;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#btnReabrir:hover{
+    background-color: lightgreen;
+    cursor: pointer;
+}
+.meio {
+    display: flex;
     justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+#bntCadratraT {
+    padding: 20px;
+    background-color: cornflowerblue;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
 }

@@ -14,80 +14,167 @@
     <button id="btnOSAbertas" class="botoes">OS Abertas</button>
     <button id="btnOSFechadas" class="botoes">OS Fechadas</button>
 
+    <h1 id="titulo"></h1>
     <div id="conteudo">
         Escolha uma opção acima
     </div>
 
- 
+
+
 
     <script>
         $(document).ready(function () {
             $("#formularioEditar").hide();
-            $("#conteudo2").hide();
-            $("#bntsalvarAlteracao").click(function () {
-            $("#conteudo").html("<img src='loading.gif' height: '40';>"); 
-            $("#formularioEditar").hide();      
-            var id_escolhido = $("#caixa_id").val();
-            var desc_escolhido = $("#caixa_desc").val();
-            var cat_escolhido = $("#caixa_categoria").val();
-            var func_escolhido = $("#caixa_fucionario").val();
-            var preco_escolhido = $("#caixa_preco").val();
-            var pagamento_escolhido = $("#caixa_pagamento").val();
-            var status_escolhido = $("#caixa_status_os").val();
-            var data_escolhido = $("#caixa_data").val();
+            $("#cxcadatra").hide();
 
-            $.ajax({
-                type: "POST",
-                url: "atualizar.php",
-                data: {
-                    id_os: id_escolhido,
-                    desc_nova: desc_escolhido,
-                    cat_nova: cat_escolhido,
-                    func_novo: func_escolhido,
-                    preco_novo: preco_escolhido,
-                    data_abertura:data_escolhido,
-                    pagamento_novo: pagamento_escolhido,
-                    status_novo: status_escolhido
-                },
-                success: function (resposta) {
-                    alert(resposta);
-                    $("#conteudo").html("Carregando...");
-                    $("#conteudo").load("consultar_os_aberto.php");
-                    $("#formularioEditar").hide();               
+            $("#btnNova").click(function () {
+                $("#conteudo").html("Carregando...");
+                $("#cxcadatra").show();
 
-                },
-                error: function () {
-                    alert("Erro ao atualizar");
-
-                }
             });
-        });
+            $("#bntFecharcadastra").click(function () {
+                $("#cxcadatra").hide();
+            });
+
+            $("#bntCadratraT").click(function () {
+                var desc_capturada = $("#descricao_servico2").val();
+                var cat_capturada = $("#categoria2").val();
+                var setor_capturada = $("#func_responsavel2").val();
+                var preco_capturado = $("#preco2").val();
+                var pagamento_capturado = $("#pagamento2").val();
+                var status_capturado = $("#status_os2").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "inserir.php",
+                    data: {
+                        descricao_servico: desc_capturada,
+                        func_responsavel: setor_capturada,
+                        categoria: cat_capturada,
+                        preco: preco_capturado,
+                        pagamento: pagamento_capturado,
+                        status_novo: status_capturado
+                    },
+                    success: function (resposta) {
+                        alert(resposta);
+                        $("#cxcadatra").hide();
+
+                    },
+                    error: function () {
+                        alert("Erro ao cadastrar!");
+
+                    }
+                });
+            });
 
 
-        $("#bntDeletar").click(function () {
-            var id_capturado = $("#caixa_id").val();
+            $(document).on("click", "#bntfechaOs", function (evento) {
+                evento.stopPropagation();
+                var id_os = $(this).attr('id_os');
 
-            if(confirm("Tem certeza que deseja!!")){
-                $("#conteudo").html("<img src='loading.gif' height: '40';>");                   
-            $.ajax({
-                url: "deletar.php",
-                type: "POST",
-                data: { id_os: id_capturado },
-                success: function (resposta) {
-                    alert(resposta);
-                    $("#conteudo").load("consultar_os_aberto.php");
+
+                $.ajax({
+                    type: "POST",
+                    url: "fechar_os.php",
+                    data: { numero_os: id_os },
+                    success: function (resposta) {
+                        alert(resposta);
+                        $("#conteudo").load("consultar_os_fechadas.php");
+
+                    },
+                    error: function () {
+                        alert("Erro ao atualizar aberto e fechado");
+
+                    }
+                });
+            }),
+
+                $(document).on("click", "#bntReabriOs", function (evento) {
+                    evento.stopPropagation();
+                    var id_os = $(this).attr('id_os');
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "reabrir_os.php",
+                        data: { numero_os: id_os },
+                        success: function (resposta) {
+                            alert(resposta);
+                            $("#conteudo").load("consultar_os_aberto.php");
+
+                        },
+                        error: function () {
+                            alert("Erro ao atualizar aberto e fechado");
+
+                        }
+                    });
+                }),
+
+
+
+                $("#bntsalvarAlteracao").click(function () {
+                    $("#conteudo").html("<img src='loading.gif' height: '40';>");
                     $("#formularioEditar").hide();
-                },
-                error: function () {
-                    alert("Erro ao deletar");
+                    var id_escolhido = $("#caixa_id").val();
+                    var desc_escolhido = $("#caixa_desc").val();
+                    var cat_escolhido = $("#caixa_categoria").val();
+                    var func_escolhido = $("#caixa_fucionario").val();
+                    var preco_escolhido = $("#caixa_preco").val();
+                    var pagamento_escolhido = $("#caixa_pagamento").val();
+                    var status_escolhido = $("#caixa_status_os").val();
+                    var data_escolhido = $("#caixa_data").val();
 
+                    $.ajax({
+                        type: "POST",
+                        url: "atualizar.php",
+                        data: {
+                            id_os: id_escolhido,
+                            desc_nova: desc_escolhido,
+                            cat_nova: cat_escolhido,
+                            func_novo: func_escolhido,
+                            preco_novo: preco_escolhido,
+                            data_abertura: data_escolhido,
+                            pagamento_novo: pagamento_escolhido,
+                            status_novo: status_escolhido
+                        },
+                        success: function (resposta) {
+                            alert(resposta);
+                            $("#conteudo").html("Carregando...");
+                            $("#conteudo").load("consultar_os_aberto.php");
+                            $("#formularioEditar").hide();
+
+                        },
+                        error: function () {
+                            alert("Erro ao atualizar");
+
+                        }
+                    });
+                });
+
+
+            $("#bntDeletar").click(function () {
+                var id_capturado = $("#caixa_id").val();
+
+                if (confirm("Tem certeza que deseja!!")) {
+                    $("#conteudo").html("<img src='loading.gif' height: '40';>");
+                    $.ajax({
+                        url: "deletar.php",
+                        type: "POST",
+                        data: { id_os: id_capturado },
+                        success: function (resposta) {
+                            alert(resposta);
+                            $("#conteudo").load("consultar_os_aberto.php");
+                            $("#formularioEditar").hide();
+                        },
+                        error: function () {
+                            alert("Erro ao deletar");
+
+                        }
+                    });
                 }
-            });   
-            }
 
-        });
+            });
 
-        
 
 
 
@@ -127,7 +214,8 @@
             });
 
 
-     
+
+
 
 
         });
@@ -137,13 +225,15 @@
         $("#btnOSAbertas").click(function () {
             $("#conteudo").html("Carregando...");
             $("#conteudo").load("consultar_os_aberto.php");
+            $("#titulo").html("Os Aberos");
 
         });
         $("#btnOSFechadas").click(function () {
             $("#conteudo").html("Carregando...");
             $("#conteudo").load("consultar_os_fechadas.php");
-
+            $("#titulo").html("Os Fechados");
         });
+
 
 
 
@@ -151,7 +241,18 @@
     <div class="tela_escura" id="formularioEditar">
 
         <div class="formulario">
-            <button id="bntFecharEditar">x</button>
+            <button id="bntFecharEditar" style="
+            background-color: #0400ff; 
+            color: white; 
+            border: none; 
+            border-radius: 50%; 
+            width: 30px; 
+            height: 30px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, background-color 0.2s;">x</button>
             <h1>Alterar OS</h1><br>
             Nº da OS <br>
             <input type="text" id="caixa_id" disabled><br>
@@ -195,6 +296,62 @@
             <button class="botoes1" id="bntsalvarAlteracao">Salvar Alterações</button>
             <button class="botoes1" id="bntDeletar">Deletar</button>
         </div>
+    </div>
+
+    <div class="tela_escura" id="cxcadatra">
+        <div class="formulario">
+            <button id="bntFecharcadastra" style="
+            background-color: #0400ff; 
+            color: white; 
+            border: none; 
+            border-radius: 50%; 
+            width: 30px; 
+            height: 30px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, background-color 0.2s;
+        ">x</button>
+            <h1>Cadastra OS</h1>
+            Descrição do Serviço: <br>
+            <textarea id="descricao_servico2"></textarea><br><br>
+
+            Funcionário Responsável: <br>
+            <select id="func_responsavel2">
+                <option value="">Selecione</option>
+                <option value="Alexandre">Alexandre</option>
+                <option value="Evellen">Evellen</option>
+                <option value="Roberto">Roberto</option>
+            </select><br><br>
+            Categoria: <br>
+            <select id="categoria2">
+                <option value="">Selecione</option>
+                <option value="Suporte Técnico">Suporte Técnico</option>
+                <option value="Instalação">Instalação</option>
+                <option value="Outros">Outros</option>
+            </select> <br> <br>
+
+            Preço (R$): <br>
+            <input type="number" step="0.01" id="preco2"><br><br>
+
+            Pagamento:<br>
+            <select id="pagamento2">
+                <option value="">Selecione</option>
+                <option value="Pendente">Pendente</option>
+                <option value="Realizado">Realizado</option>
+            </select><br><br>
+
+            Status:<br>
+            <select id="status_os2">
+                <option value="">Selecione</option>
+                <option value="Aberta">Aberta</option>
+                <option value="Fechada">Fechada</option>
+            </select><br><br>
+
+            <div class="meio"><button id="bntCadratraT">Cadastrar</button><br></div>
+        </div>
+
     </div>
 </body>
 
